@@ -17,12 +17,14 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE. */
- 
+
 
 package org.kxml2.io;
 
 import java.io.*;
 import org.xmlpull.v1.*;
+
+import static org.kxml2.util.System.manualArrayCopy;
 
 public class KXmlSerializer implements XmlSerializer {
 
@@ -52,7 +54,7 @@ public class KXmlSerializer implements XmlSerializer {
 
         if (indent.length <= depth) {
             boolean[] hlp = new boolean[depth + 4];
-            System.arraycopy(indent, 0, hlp, 0, depth);
+            manualArrayCopy(indent, 0, hlp, 0, depth);
             indent = hlp;
         }
         indent[depth] = indent[depth - 1];
@@ -75,7 +77,7 @@ public class KXmlSerializer implements XmlSerializer {
 
         if (nspCounts.length <= depth + 1) {
             int[] hlp = new int[depth + 8];
-            System.arraycopy(nspCounts, 0, hlp, 0, depth + 1);
+            manualArrayCopy(nspCounts, 0, hlp, 0, depth + 1);
             nspCounts = hlp;
         }
 
@@ -285,7 +287,7 @@ public class KXmlSerializer implements XmlSerializer {
 
         if (nspStack.length < pos + 1) {
             String[] hlp = new String[nspStack.length + 16];
-            System.arraycopy(nspStack, 0, hlp, 0, pos);
+            manualArrayCopy(nspStack, 0, hlp, 0, pos);
             nspStack = hlp;
         }
 
@@ -372,7 +374,7 @@ public class KXmlSerializer implements XmlSerializer {
 
         if (elementStack.length < esp + 3) {
             String[] hlp = new String[elementStack.length + 12];
-            System.arraycopy(elementStack, 0, hlp, 0, esp);
+            manualArrayCopy(elementStack, 0, hlp, 0, esp);
             elementStack = hlp;
         }
 

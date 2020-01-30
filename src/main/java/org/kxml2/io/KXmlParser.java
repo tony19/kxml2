@@ -27,6 +27,8 @@ import java.util.*;
 
 import org.xmlpull.v1.*;
 
+import static org.kxml2.util.System.manualArrayCopy;
+
 /** A simple, pull based XML parser. This classe replaces the kXML 1
     XmlParser class and the corresponding event classes. */
 
@@ -148,7 +150,7 @@ public class KXmlParser implements XmlPullParser {
 
                 //System.out.println (prefixMap);
 
-                System.arraycopy(
+                manualArrayCopy(
                     attributes,
                     i + 4,
                     attributes,
@@ -225,7 +227,7 @@ public class KXmlParser implements XmlPullParser {
         if (arr.length >= required)
             return arr;
         String[] bigger = new String[required + 16];
-        System.arraycopy(arr, 0, bigger, 0, arr.length);
+        manualArrayCopy(arr, 0, bigger, 0, arr.length);
         return bigger;
     }
 
@@ -591,7 +593,7 @@ public class KXmlParser implements XmlPullParser {
 
         if (txtPos + 1 >= txtBuf.length) { // +1 to have enough space for 2 surrogates, if needed
             char[] bigger = new char[txtPos * 4 / 3 + 4];
-            System.arraycopy(txtBuf, 0, bigger, 0, txtPos);
+            manualArrayCopy(txtBuf, 0, bigger, 0, txtPos);
             txtBuf = bigger;
         }
 
@@ -704,7 +706,7 @@ public class KXmlParser implements XmlPullParser {
 
         if (depth >= nspCounts.length) {
             int[] bigger = new int[depth + 4];
-            System.arraycopy(nspCounts, 0, bigger, 0, nspCounts.length);
+            manualArrayCopy(nspCounts, 0, bigger, 0, nspCounts.length);
             nspCounts = bigger;
         }
 
@@ -859,8 +861,8 @@ public class KXmlParser implements XmlPullParser {
             peek[0] = peek[1];
         }
         //		else {
-        //			result = peek[0]; 
-        //			System.arraycopy (peek, 1, peek, 0, peekCount-1);
+        //			result = peek[0];
+        //			manualArrayCopy (peek, 1, peek, 0, peekCount-1);
         //		}
         peekCount--;
 

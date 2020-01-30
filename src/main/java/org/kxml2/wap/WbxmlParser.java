@@ -919,7 +919,7 @@ public class WbxmlParser implements XmlPullParser {
         
         if (depth >= nspCounts.length) {
             int[] bigger = new int[depth + 4];
-            System.arraycopy(nspCounts, 0, bigger, 0, nspCounts.length);
+            manualArrayCopy(nspCounts, 0, bigger, 0, nspCounts.length);
             nspCounts = bigger;
         }
         
@@ -952,7 +952,7 @@ public class WbxmlParser implements XmlPullParser {
         if (arr.length >= required)
             return arr;
         String[] bigger = new String[required + 16];
-        System.arraycopy(arr, 0, bigger, 0, arr.length);
+        manualArrayCopy(arr, 0, bigger, 0, arr.length);
         return bigger;
     }
     
