@@ -29,3 +29,20 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives sourcesJar
 }
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        // Warn about deprecations
+        options.compilerArgs << '-Xlint:deprecation'
+        // Warn about unchecked usages
+        options.compilerArgs << '-Xlint:unchecked'
+
+        options.debug(['debugLevel': 'source,lines,vars'])
+        options.debug = true
+    }
+
+    tasks.withType(AbstractArchiveTask) {
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+}
