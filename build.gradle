@@ -1,8 +1,15 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+    }
+}
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'java'
 apply plugin: 'maven'
-
-group = 'net.sf.kxml'
-version = '2.5.0.1'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -26,8 +33,13 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+
 artifacts {
-    archives sourcesJar
+    archives sourcesJar, javadocJar
 }
 
 allprojects {
@@ -44,5 +56,35 @@ allprojects {
     tasks.withType(AbstractArchiveTask) {
         preserveFileTimestamps = false
         reproducibleFileOrder = true
+    }
+}
+
+bintray {
+    user = rootProject.hasProperty('BINTRAY_USER') ? BINTRAY_USER : ''
+    key = rootProject.hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : ''
+    configurations = ['archives']
+
+    publish = true
+    override = true
+
+    pkg {
+        repo = 'maven'
+        name = "${GROUP}:${POM_NAME}"
+        desc = POM_DESCRIPTION
+        licenses = [POM_LICENCE_ID]
+        labels = ['xmlparser', 'xml', 'java']
+        websiteUrl = POM_URL
+        issueTrackerUrl = POM_SCM_ISSUES_URL
+        vcsUrl = POM_SCM_URL
+        githubRepo = POM_SCM_URL
+
+        version {
+            name = VERSION_NAME
+            released  = new Date()
+            vcsTag = VERSION_NAME
+            gpg {
+                sign = true
+            }
+        }
     }
 }

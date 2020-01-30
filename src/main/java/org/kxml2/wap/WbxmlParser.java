@@ -30,6 +30,7 @@ import java.util.Hashtable;
 
 import org.xmlpull.v1.*;
 
+import static org.kxml2.util.System.manualArrayCopy;
 
 public class WbxmlParser implements XmlPullParser {
 
